@@ -30,13 +30,14 @@ const {
 import './editor.scss';
 import Header from './components/header.js';
 import Notices from './components/notices.js';
-import TemplatesList from './components/templates-list.js';
+import ContentArea from './components/content-area.js';
 
 const Library = ({
 	clientId,
 	close
 }) => {
 	const block = useSelect( select => select( 'core/block-editor' ).getBlock( clientId ) );
+	const authors = useSelect( select => select( 'core' ).getAuthors() );
 
 	const { replaceBlocks } = useDispatch( 'core/block-editor' );
 	const { createNotice } = useDispatch( 'core/notices' );
@@ -113,6 +114,8 @@ const Library = ({
 	const [ blocksCategories, setBlocksCategories ] = useState([]);
 	const [ templateCategories, setTemplateCategories ] = useState([]);
 	const [ data, setData ] = useState([]);
+	const [ customTemplates, setTemplates ] = useState([]);
+	const [ customTemplatesLoaded, setTemplatesLoaded ] = useState( false );
 	const [ preview, setPreview ] = useState( false );
 	const [ selectedTemplate, setSelectedTemplate ] = useState( null );
 	const [ selectedTemplateContent, setSelectedTemplateContent ] = useState( null );
@@ -132,10 +135,17 @@ const Library = ({
 		setLoading( true );
 
 		try {
-			let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ template.template_url }&preview=true` });
+			let data;
 
-			if ( data.__file && data.content && 'wp_export' === data.__file ) {
-				data = parse( data.content );
+			if ( 'number' === typeof template ) {
+				data = await apiFetch({ path: `wp/v2/otter_templates/${ template }?context=edit` });
+				data = parse( data.content.raw );
+			} else {
+				data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ template.template_url }&preview=true` });
+
+				if ( data.__file && data.content && 'wp_export' === data.__file ) {
+					data = parse( data.content );
+				}
 			}
 
 			setSelectedTemplate( template );
@@ -157,27 +167,34 @@ const Library = ({
 		setLoading( false );
 	};
 
-	const importTemplate = async url => {
+	const importTemplate = async template => {
 		setPreview( false );
 		setLoading( true );
 
 		try {
-			let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ url }` });
+			let data;
 
-			if ( data.__file && data.content && 'wp_export' === data.__file ) {
-				data = parse( data.content );
-			}
+			if ( 'number' === typeof template ) {
+				data = await apiFetch({ path: `wp/v2/otter_templates/${ template }?context=edit` });
+				data = parse( data.content.raw );
+			} else {
+				data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/import_template?url=${ template }` });
 
-			if ( url.includes( 'https://raw.githubusercontent.com/Codeinwp/' ) && window.themeisleGutenberg.dataLogging.templates && Boolean( window.themeisleGutenberg.canTrack ) ) {
-				const obj = window.themeisleGutenberg.dataLogging.templates.find( template => template.url === url );
+				if ( data.__file && data.content && 'wp_export' === data.__file ) {
+					data = parse( data.content );
+				}
 
-				if ( obj ) {
-					obj.instances = obj.instances + 1;
-				} else {
-					window.themeisleGutenberg.dataLogging.templates.push({
-						url,
-						instances: 1
-					});
+				if ( template.includes( 'https://raw.githubusercontent.com/Codeinwp/' ) && window.themeisleGutenberg.dataLogging.templates && Boolean( window.themeisleGutenberg.canTrack ) ) {
+					const obj = window.themeisleGutenberg.dataLogging.templates.find( template => template.url === template );
+
+					if ( obj ) {
+						obj.instances = obj.instances + 1;
+					} else {
+						window.themeisleGutenberg.dataLogging.templates.push({
+							url: template,
+							instances: 1
+						});
+					}
 				}
 			}
 
@@ -205,7 +222,6 @@ const Library = ({
 				{ 'is-preview': preview }
 			) }
 			onRequestClose={ close }
-			isDismissable={ false }
 			shouldCloseOnClickOutside={ false }
 		>
 			<Header
@@ -226,10 +242,16 @@ const Library = ({
 
 			<Notices/>
 
-			<TemplatesList
+			<ContentArea
 				preview={ preview }
-				isLoading={ isLoading }
 				data={ data }
+				authors={ authors }
+				isLoading={ isLoading }
+				setLoading={ setLoading }
+				customTemplates={ customTemplates }
+				setTemplates={ setTemplates }
+				customTemplatesLoaded={ customTemplatesLoaded }
+				setTemplatesLoaded={ setTemplatesLoaded }
 				tab={ tab }
 				selectedTemplateContent={ selectedTemplateContent }
 				selectedCategory={ selectedCategory }

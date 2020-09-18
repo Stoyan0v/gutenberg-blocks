@@ -3,6 +3,12 @@
  */
 import classnames from 'classnames';
 
+import {
+	blockDefault,
+	blockTable,
+	file
+} from '@wordpress/icons';
+
 /**
  * WordPress dependencies
  */
@@ -63,55 +69,66 @@ const Header = ({
 	const options = getOptions();
 
 	return (
-		<div className="library-modal-control-panel">
-			<div className="library-modal-header">
-				<div className="library-modal-header-logo">
+		<div className="wp-block-themeisle-library-modal-control-panel">
+			<div className="wp-block-themeisle-library-modal-header">
+				<div className="wp-block-themeisle-library-modal-header-logo">
 					{ preview ? (
 						<Button
-							className="library-modal-header-tabs-button back-to-library"
+							className="wp-block-themeisle-library-modal-header-tabs-button back-to-library"
 							aria-label={ __( 'Back to Library' ) }
 							onClick={ () => setPreview( false ) }
 						>
 							<Dashicon icon="arrow-left-alt" /> { __( 'Back to Library' ) }
 						</Button>
 					) :
-						<div className="library-modal-header-tabs-button">
+						<div className="wp-block-themeisle-library-modal-header-tabs-button">
 							<Icon icon={ otterIcon } />
 						</div>
 					}
 				</div>
 
 				{ ! preview && (
-					<div className="library-modal-header-tabs">
+					<div className="wp-block-themeisle-library-modal-header-tabs">
 						<Button
 							className={ classnames(
-								'library-modal-header-tabs-button',
+								'wp-block-themeisle-library-modal-header-tabs-button',
 								{ 'is-selected': 'block' === tab }
 							) }
 							onClick={ () => changeTab( 'block' ) }
 						>
-							<Dashicon icon="screenoptions" />
+							<Icon icon={ blockDefault } />
 							{ __( 'Blocks' ) }
 						</Button>
 
 						<Button
 							className={ classnames(
-								'library-modal-header-tabs-button',
+								'wp-block-themeisle-library-modal-header-tabs-button',
 								{ 'is-selected': 'template' === tab }
 							) }
 							onClick={ () => changeTab( 'template' ) }
 						>
-							<Dashicon icon="editor-table" />
+							<Icon icon={ blockTable } />
 							{ __( 'Templates' ) }
+						</Button>
+
+						<Button
+							className={ classnames(
+								'wp-block-themeisle-library-modal-header-tabs-button',
+								{ 'is-selected': 'custom' === tab }
+							) }
+							onClick={ () => changeTab( 'custom' ) }
+						>
+							<Icon icon={ file } />
+							{ __( 'Saved' ) }
 						</Button>
 					</div>
 				) }
 
-				<div className="library-modal-header-actions">
+				<div className="wp-block-themeisle-library-modal-header-actions">
 					{ preview && (
 						<Button
-							className="library-modal-header-tabs-button insert-button"
-							onClick={ () => importTemplate( selectedTemplate.template_url ) }
+							className="wp-block-themeisle-library-modal-header-tabs-button insert-button"
+							onClick={ () => importTemplate( 'object' === typeof selectedTemplate ? selectedTemplate.template_url : selectedTemplate ) }
 							tabindex="0"
 						>
 							<Dashicon icon="arrow-down-alt" size={ 16 } />
@@ -121,7 +138,7 @@ const Header = ({
 
 					<Tooltip text={ __( 'Close' ) }>
 						<Button
-							className="library-modal-header-tabs-button"
+							className="wp-block-themeisle-library-modal-header-tabs-button"
 							aria-label={ __( 'Close settings' ) }
 							onClick={ close }
 						>
@@ -131,10 +148,10 @@ const Header = ({
 				</div>
 			</div>
 
-			{ ! preview && (
-				<div className="library-modal-actions">
+			{ ! preview && 'custom' !== tab && (
+				<div className="wp-block-themeisle-library-modal-actions">
 					<SelectControl
-						className="library-modal-category-control"
+						className="wp-block-themeisle-library-modal-category-control"
 						value={ 'all' === selectedCategory ? 'all' : selectedCategory }
 						onChange={ selectCategory }
 						options={ options }
@@ -144,7 +161,7 @@ const Header = ({
 						type="text"
 						value={ search || '' }
 						placeholder={ __( 'Search' ) }
-						className="library-modal-search-control"
+						className="wp-block-themeisle-library-modal-search-control"
 						onChange={ changeSearch }
 					/>
 				</div>

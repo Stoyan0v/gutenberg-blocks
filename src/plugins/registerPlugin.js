@@ -3,6 +3,8 @@
  */
 const { Icon } = wp.components;
 
+const { Fragment } = wp.element;
+
 const { registerPlugin } = wp.plugins;
 
 /**
@@ -10,6 +12,7 @@ const { registerPlugin } = wp.plugins;
  */
 import './editor.scss';
 import { otterIcon } from '../helpers/icons.js';
+import CustomTemplates from './custom-templates/index.js';
 import Options from './options/index.js';
 import './css-handler/index.js';
 import './data/index.js';
@@ -20,5 +23,10 @@ const icon = <Icon icon={ otterIcon } />;
 
 registerPlugin( 'themeisle-blocks', {
 	icon,
-	render: Options
+	render: () => (
+		<Fragment>
+			<Options/>
+			<CustomTemplates/>
+		</Fragment>
+	)
 });

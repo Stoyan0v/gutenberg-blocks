@@ -14,7 +14,7 @@ const Notices = () => {
 	const { removeNotice } = useDispatch( 'core/notices' );
 
 	return (
-		<div className="library-modal-error">
+		<div className="wp-block-themeisle-library-modal-error">
 			{ notices.map( notice => (
 				<Notice
 					status={ notice.status }

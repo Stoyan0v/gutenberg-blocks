@@ -18,18 +18,18 @@ const Template = ({
 	return (
 		<div
 			aria-label={ template.title || __( 'Untitled Gutenberg Template' ) }
-			className="library-modal-content__item"
+			className="wp-block-themeisle-library-modal-content__item"
 			tabindex="0"
 		>
-			<div className="library-modal-content__preview">
+			<div className="wp-block-themeisle-library-modal-content__preview">
 				<LazyLoad>
 					<img src={ template.screenshot_url || 'https://raw.githubusercontent.com/Codeinwp/gutenberg-templates/master/assets/images/default.jpg' } />
 				</LazyLoad>
 			</div>
 
-			<div className="library-modal-content__footer">
-				<div className="library-modal-content__footer_meta">
-					<h4 className="library-modal-content__footer_meta_area">
+			<div className="wp-block-themeisle-library-modal-content__footer">
+				<div className="wp-block-themeisle-library-modal-content__footer_meta">
+					<h4 className="wp-block-themeisle-library-modal-content__footer_meta_area">
 						{ ( template.title ) && (
 							template.title + ( template.author && __( ' by ' ) + template.author )
 						) }
@@ -40,11 +40,11 @@ const Template = ({
 					</h4>
 				</div>
 
-				<div className="library-modal-content__footer_actions">
+				<div className="wp-block-themeisle-library-modal-content__footer_actions">
 					<Button
 						isSecondary
 						isLarge
-						className="library-modal-overlay__actions"
+						className="wp-block-themeisle-library-modal-overlay__actions"
 						onClick={ () => importPreview( template ) }
 						tabindex="0"
 					>
@@ -54,7 +54,7 @@ const Template = ({
 					<Button
 						isPrimary
 						isLarge
-						className="library-modal-overlay__actions"
+						className="wp-block-themeisle-library-modal-overlay__actions"
 						onClick={ () => importTemplate( template.template_url ) }
 						tabindex="0"
 					>

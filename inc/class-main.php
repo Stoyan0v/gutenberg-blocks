@@ -169,6 +169,7 @@ class Main {
 				'assetsPath'    => plugin_dir_url( $this->get_dir() ) . 'assets',
 				'updatePath'    => admin_url( 'update-core.php' ),
 				'optionsPath'   => admin_url( 'options-general.php?page=otter' ),
+				'adminPath'     => admin_url(),
 				'mapsAPI'       => $api,
 				'themeDefaults' => $this->get_global_defaults(),
 				'isWPVIP'       => function_exists( 'is_wpcom_vip' ),
@@ -448,6 +449,7 @@ class Main {
 			'\ThemeIsle\GutenbergBlocks\CSS\Block_Frontend',
 			'\ThemeIsle\GutenbergBlocks\CSS\CSS_Handler',
 			'\ThemeIsle\GutenbergBlocks\Plugins\Options_Settings',
+			'\ThemeIsle\GutenbergBlocks\Plugins\Post_Type',
 			'\ThemeIsle\GutenbergBlocks\Server\Plugin_Card_Server',
 			'\ThemeIsle\GutenbergBlocks\Server\Template_Library_Server',
 		);
