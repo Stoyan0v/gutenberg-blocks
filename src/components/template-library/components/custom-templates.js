@@ -148,16 +148,16 @@ const CustomTemplates = ({
 			{ 1 <= customTemplates.length && (
 				<div className="wp-block-themeisle-library-modal-content__table">
 					<div className="wp-block-themeisle-library-modal-content__table_header wp-block-themeisle-library-modal-content__table_row">
-						<div className="wp-block-themeisle-library-modal-content__table_row__coloum wp-block-themeisle-library-modal-content__table_row__coloum_name">
+						<div className="wp-block-themeisle-library-modal-content__table_row__column wp-block-themeisle-library-modal-content__table_row__column_title">
 							{ __( 'Template Name' ) }
 						</div>
-						<div className="wp-block-themeisle-library-modal-content__table_row__coloum wp-block-themeisle-library-modal-content__table_row__coloum_author">
+						<div className="wp-block-themeisle-library-modal-content__table_row__column wp-block-themeisle-library-modal-content__table_row__column_author">
 							{ __( 'Author' ) }
 						</div>
-						<div className="wp-block-themeisle-library-modal-content__table_row__coloum wp-block-themeisle-library-modal-content__table_row__coloum_date">
+						<div className="wp-block-themeisle-library-modal-content__table_row__column wp-block-themeisle-library-modal-content__table_row__column_date">
 							{ __( 'Creation Date' ) }
 						</div>
-						<div className="wp-block-themeisle-library-modal-content__table_row__coloum wp-block-themeisle-library-modal-content__table_row__coloum_actions">
+						<div className="wp-block-themeisle-library-modal-content__table_row__column wp-block-themeisle-library-modal-content__table_row__column_actions">
 							{ __( 'Actions' ) }
 						</div>
 					</div>
@@ -168,16 +168,16 @@ const CustomTemplates = ({
 
 						return (
 							<div className="wp-block-themeisle-library-modal-content__table_row">
-								<div className="wp-block-themeisle-library-modal-content__table_row__coloum wp-block-themeisle-library-modal-content__table_row__coloum_name">
+								<div className="wp-block-themeisle-library-modal-content__table_row__column wp-block-themeisle-library-modal-content__table_row__column_title">
 									{ template.title.rendered }
 								</div>
-								<div className="wp-block-themeisle-library-modal-content__table_row__coloum wp-block-themeisle-library-modal-content__table_row__coloum_author">
+								<div className="wp-block-themeisle-library-modal-content__table_row__column wp-block-themeisle-library-modal-content__table_row__column_author">
 									{ author.name }
 								</div>
-								<div className="wp-block-themeisle-library-modal-content__table_row__coloum wp-block-themeisle-library-modal-content__table_row__coloum_date">
+								<div className="wp-block-themeisle-library-modal-content__table_row__column wp-block-themeisle-library-modal-content__table_row__column_date">
 									{ date }
 								</div>
-								<div className="wp-block-themeisle-library-modal-content__table_row__coloum wp-block-themeisle-library-modal-content__table_row__coloum_actions">
+								<div className="wp-block-themeisle-library-modal-content__table_row__column wp-block-themeisle-library-modal-content__table_row__column_actions">
 									<Button
 										isTertiary
 										isSmall

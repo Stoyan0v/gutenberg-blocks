@@ -322,7 +322,7 @@
 					&.wp-block-themeisle-library-modal-content__table_header {
 						border: none;
 
-						.wp-block-themeisle-library-modal-content__table_row__coloum {
+						.wp-block-themeisle-library-modal-content__table_row__column {
 							font-weight: 600;
 							font-size: 10px;
 							text-transform: uppercase;
@@ -338,21 +338,21 @@
 						border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 					}
 
-					.wp-block-themeisle-library-modal-content__table_row__coloum {
-						&.wp-block-themeisle-library-modal-content__table_row__coloum_name {
+					.wp-block-themeisle-library-modal-content__table_row__column {
+						&.wp-block-themeisle-library-modal-content__table_row__column_title {
 							width: 35%;
 							font-weight: 600;
 						}
 
-						&.wp-block-themeisle-library-modal-content__table_row__coloum_author {
+						&.wp-block-themeisle-library-modal-content__table_row__column_author {
 							width: 20%;
 						}
 
-						&.wp-block-themeisle-library-modal-content__table_row__coloum_date {
+						&.wp-block-themeisle-library-modal-content__table_row__column_date {
 							width: 20%;
 						}
 
-						&.wp-block-themeisle-library-modal-content__table_row__coloum_actions {
+						&.wp-block-themeisle-library-modal-content__table_row__column_actions {
 							width: 25%;
 							text-align: right;
 							display: flex;
@@ -458,11 +458,32 @@
 
 			.wp-block-themeisle-library-modal-content {
 				grid-template-columns: 100%;
+
+				.wp-block-themeisle-library-modal-content__table {
+					.wp-block-themeisle-library-modal-content__table_row {
+						.wp-block-themeisle-library-modal-content__table_row__column {
+							&.wp-block-themeisle-library-modal-content__table_row__column_title {
+								width: 50%;
+							}
+
+							&.wp-block-themeisle-library-modal-content__table_row__column_author {
+								display: none;
+							}
+
+							&.wp-block-themeisle-library-modal-content__table_row__column_date {
+								display: none;
+							}
+
+							&.wp-block-themeisle-library-modal-content__table_row__column_actions {
+								width: 50%;
+							}
+						}
+					}
+				}
 			}
 		}
 	}
 }
-
 
 @media ( max-width:1439px ) {
 	.wp-block-themeisle-library-modal {
