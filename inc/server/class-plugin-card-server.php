@@ -66,27 +66,6 @@ class Plugin_Card_Server {
 				),
 			)
 		);
-
-		register_rest_route(
-			$namespace,
-			'/get_plugin',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get' ),
-					'args'                => array(
-						'slug' => array(
-							'type'        => 'string',
-							'required'    => true,
-							'description' => __( 'Slug of the plugin.', 'textdomain' ),
-						),
-					),
-					'permission_callback' => function () {
-						return current_user_can( 'edit_posts' );
-					},
-				),
-			)
-		);
 	}
 
 	/**

@@ -17,6 +17,8 @@ const {
 	Spinner
 } = wp.components;
 
+const { useDispatch } = wp.data;
+
 const {
 	useEffect,
 	useRef,
@@ -36,6 +38,8 @@ const BlockPlaceholder = ({
 	setError,
 	className
 }) => {
+	const { createSuccessNotice } = useDispatch( 'core/notices' );
+
 	const searchRef = useRef( null );
 	let scrollingIntoView = false;
 	let suggestionNodes = [];
@@ -71,17 +75,27 @@ const BlockPlaceholder = ({
 		setAttributes({ slug: '' });
 		setLoading( true );
 		setError( false );
-		let data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/get_plugins?search=${ encodeURIComponent( query ) }` });
-		if ( data.data.errors ) {
-			setError( true );
-			setLoading( false );
-			setSelectedSuggestion( null );
-			setResults({});
-			return;
+
+		try {
+			const data = await apiFetch({ path: `themeisle-gutenberg-blocks/v1/get_plugins?search=${ encodeURIComponent( query ) }` });
+
+			if ( data.data.errors ) {
+				setError( true );
+				setLoading( false );
+				setSelectedSuggestion( null );
+				setResults({});
+				return;
+			}
+
+			setResults( data.data.plugins );
+		} catch ( error ) {
+			createSuccessNotice( __( 'There seems to be an error. Please try again.' ), {
+				type: 'snackbar'
+			});
 		}
+
 		setLoading( false );
 		setSelectedSuggestion( null );
-		setResults( data.data.plugins );
 	};
 
 	const moveUp = event => {
