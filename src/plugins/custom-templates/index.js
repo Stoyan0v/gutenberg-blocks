@@ -3,6 +3,8 @@
  */
 const { __ } = wp.i18n;
 
+const apiFetch = wp.apiFetch;
+
 const { serialize } = wp.blocks;
 
 const {
@@ -37,35 +39,44 @@ const CustomTemplates = () => {
 			content: serialize( blocks ),
 			getCurrentUser
 		};
-	}, []);
+	});
 
 	const { createSuccessNotice } = useDispatch( 'core/notices' );
 
-	const onSave = () => {
+	const onSave = async() => {
 		setLoading( true );
 
-		wp.apiRequest({
-			path: 'wp/v2/otter_templates',
-			method: 'POST',
-			data: {
-				title: title || __( 'Template' ),
-				author: getCurrentUser().id || 1,
-				content,
-				status: 'publish'
-			}
-		}).then( () => {
-			setLoading( false );
+		try {
+			await apiFetch({
+				path: 'wp/v2/otter_templates',
+				method: 'POST',
+				data: {
+					title: title || __( 'Template' ),
+					author: getCurrentUser().id || 1,
+					content,
+					status: 'publish'
+				}
+			});
+
 			setOpen( false );
 			setTitle( '' );
+
 			createSuccessNotice( __( 'Template saved successfully.' ), {
 				type: 'snackbar'
 			});
-		});
+		} catch ( error ) {
+			createSuccessNotice( __( 'There seems to be an error. Please try again.' ), {
+				type: 'snackbar'
+			});
+		}
+
+		setLoading( false );
 	};
+
 	return (
 		<Fragment>
 			<PluginBlockSettingsMenuItem
-				label={ __( 'Add to Custom Templates' ) }
+				label={ __( 'Add to Saved Templates' ) }
 				icon={ 'none' } // We don't want an icon, as new UI of Gutenberg does't have icons for Menu Items, but the component doesn't allow that so we pass an icon which doesn't exist.
 				onClick={ () => setOpen( true ) }
 			/>

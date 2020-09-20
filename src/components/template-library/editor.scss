@@ -275,19 +275,19 @@
 						border-left: 1px solid rgba(0,0,0,.05);
 						transition: opacity .1s ease-in-out;
 
+						.components-button-group {
+							display: flex;
+
+							button {
+								margin: 0;
+							}
+						}
+
 						button {
 							position: relative;
 							align-items: center;
-							height: auto;
 							padding: 0 12px 2px;
-
-							svg {
-								margin-right: 5px;
-							}
-
-							&:first-child {
-								margin-right: 10px;
-							}
+							margin-right: 10px;
 						}
 					}
 				}
